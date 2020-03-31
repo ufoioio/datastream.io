@@ -74,7 +74,7 @@ docker-compose 커맨드들은 docker-compose.yaml 파일이 있는 곳에서 �
 코딩된 Anomaly 모델을 dasio에서 쓸 수 있습니다. AnomalyDetector abstract base 클래스를 상속받고 최소한 train, update & score 메소드를 만들면 쓸 수 있습니다. 99퍼센트의 정확도를 보이는 anomaly detector 모델이 examples 폴더에 있습니다. 코딩된 디텍터들을 포함하는 파이썬 모듈들을 
 `-modules` 파라메터를 통해 로드하고 모듈안에 있는 디텍터 클래스를 클래스 이름으로 `--detector` 파라메터를 통해서 넣어주면 됩니다.
 
-    dsio  --modules detector.py --detector GreaterThanMaxRolling data/cardata_sample.csv
+    dsio --modules detector.py --detector GreaterThanMaxRolling data/cardata_sample.csv
 
 ### Integration with scikit-learn
 
