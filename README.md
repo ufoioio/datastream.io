@@ -38,15 +38,19 @@ You can use the example csv datasets or provide your own. If the dataset include
 
     dsio data/cardata_sample.csv
 
-위 커맨드는 cardata라는 
+위 커맨드는 cardata라는 샘플 csv를 로드하고 기본 anomaly detection 모델(Gaussian1D)을 각각의 모든 열에 적용합니다. 그리고 나서 적절한 Bokeh 대쉬보드를 생성하고 데이터를 흐르게 할 것입니다. 생성된 대시보드를 가르키는 브라우저의 window는 열려있어야 합니다.
 
 The above command will load the cardata sample csv and will use the default Gaussian1D anomaly detector to apply scores on every numeric column. Then it will generate an appropriate Bokeh dashboard and restream the data. A browser window should open that will point to the generated dashboard.
 
 ![Bokeh](screenshots/bokeh.png?raw=true "DSIO bokeh dashboard")
 
+여러 데이터셋과 Anomaly 모델을 실험해볼 수 있습니다.
 You can experiment with different datasets and anomaly detectors. E.g.
 
     dsio --detector percentile1d path_to_my_dataset/my_dataset.csv
+
+`--senosrs` 파라메터를 이용하여 특정한 열을 선택할 수 있습니다.  
+`--speed` 파라메터는 스트리밍 속도를 올리거나 내릴 수 있습니다.
 
 You can select specific columns using the `--sensors` argument and you can increase or decrease the streaming speed using the `--speed` argument.
 
