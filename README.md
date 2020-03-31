@@ -68,7 +68,6 @@ Elasticsearch와 Kibana가 실행됬는지 체크
     docker-compose down
 
 docker-compose 커맨드들은 docker-compose.yaml 파일이 있는 곳에서 실행되어야합니다. (e.g. dsio-env/src/dsio/examples)
-Keep in mind that docker-compose commands need to be run in the directory where the docker-compose.yaml file resides (e.g. dsio-env/src/dsio/examples)
 
 ### Defining your own anomaly detectors
 
