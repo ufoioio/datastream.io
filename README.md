@@ -58,9 +58,13 @@ You can select specific columns using the `--sensors` argument and you can incre
 
 ### Elasticsearch & Kibana (optional)
 
+로컬 Elasticsearch에 데이터를 흐르게 하고 Kibana 대쉬보드를 생성하기 위해서는 `--es-uri`와 `--kibina-uri` 파라메터를 이용하면 됩니다.
+
 In order to restream to an Elasticsearch instance that you're running locally and generate a Kibana dashboard you can use the `--es-uri` and `--kibana-uri` arguments.
 
     dsio --es-uri http://localhost:9200/ --kibana-uri http://localhost:5601/app/kibana data/cardata_sample.csv
+
+만약 localhost와 기본 Kibina와 ElasticSearch 포트를 쓰신다면 그냥 간단하게 다음과 같이 끝내도 됩니다.
 
 If you are using localhost and the default Kibana and ES ports, you can use the shorthand:
 
@@ -68,27 +72,38 @@ If you are using localhost and the default Kibana and ES ports, you can use the 
 
 ![ElasticKibana](screenshots/ek.png?raw=true "DSIO bokeh dashboard")
 
+만약 Elasticsearch와 Kibina 5.x에 접근할 수 없다면 `examples` 폴더의 docker-compose.yaml을 이용하여 시작하면 됩니다. 도커와 docker-compose는 이 작업을 위해서 설치되어야 합니다.
+
 If you don't have access to Elasticsearch and Kibana 5.x instances, you can easily start them up in your machine using the docker-compose.yaml file within the examples directory. Docker and docker-compose need to be installed for this to work.
 
     docker-compose up -d
+
+Elasticsearch와 Kibana가 실행됬는지 체크
 
 Check that Elasticsearch and Kibana are up.
 
     docker-compose ps
 
+끝나면 다음과 같이 종료합니다.
 Once you're done you can bring them down.
 
     docker-compose down
 
+docker-compose 커맨드들은 docker-compose.yaml 파일이 있는 곳에서 실행되어야합니다. (e.g. dsio-env/src/dsio/examples)
 Keep in mind that docker-compose commands need to be run in the directory where the docker-compose.yaml file resides (e.g. dsio-env/src/dsio/examples)
 
 ### Defining your own anomaly detectors
+
+코딩된 Anomaly 모델을 dasio에서 쓸 수 있습니다. AnomalyDetector abstract base 클래스를 상속받고 최소한 train, update & score 메소드를 만들면 쓸 수 있습니다. 99퍼센트의 정확도를 보이는 anomaly detector 모델이 examples 폴더에 있습니다. 코딩된 디텍터들을 포함하는 파이썬 모듈들을 `-modules` 파라메터를 통해 로드하고 모듈안에 있는 디텍터 클래스를 클래스 이름으로 `--detector` 파라메터를 통해서 넣어주면 됩니다.
 
 You can use dsio with your own hand coded anomaly detectors. These should inherit from the AnomalyDetector abstract base class and implement at least the train, update & score methods. You can find an example 99th percentile anomaly detector in the examples dir. Load the python modules that contain your detectors using the `--modules` argument and select the target detector by providing its class name to the `--detector` argument (case insensitive).
 
     dsio  --modules detector.py --detector GreaterThanMaxRolling data/cardata_sample.csv
 
 ### Integration with scikit-learn
+
+자연히 우리는 사람들에게 `dasio`와 `sklearn`을 함께 쓸 것을 권합니다.
+`sklearn`은 현제 regression, classification, 클러스터링 도구를 제공합니다. 그러나 anomaly detection은 따로 떨어져 분류되어있습니다. 우리는 `AnomalyMinxin` 인터페이스를 통해서 `sklearn`을 쓸 수 있도록 했습니다. `sklearn`을 임포트 한 후 간단하게 인터페이스 안의 함수를 override해서 `dsio`와 함께 쓸 수 있도록 했습니다. 다음 위치에 example 코드를 만들어 놨습니다.
 
 Naturally we encourage people to use `dsio` in combination with `sklearn`: we have no wish to reinvent the wheel! However, `sklearn` currently supports regression, classification and clustering interfaces, but not anomaly detection as a standalone category. We are trying to correct that by the introduction of the `AnomalyMixin`: an interface for anomaly detection which follows `sklearn` design patterns. When you import an `sklearn` object you can therefore simply define or override certain methods to make it compatible with `dsio`. We have provided an example for you here:
 
