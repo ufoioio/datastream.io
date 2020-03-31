@@ -11,6 +11,13 @@ The recommended installation method is to use pip within a Python 3.x virtalenv.
     pip install -e git+https://github.com/MentatInnovations/datastream.io#egg=dsio
 
 ## Usage
+dsio는 커맨드라인이나 파이썬 임포트를 통해서 사용할 수 있습니다.   
+#### dsio의 기능
+1. built-in Bokeh 서버를 이용해서 시각화 할 수 있다.
+2. ElasticSearch에 데이터 스트림을 흐르게 하고 Kibina로 시각화 할 수 있습니다.  
+
+위의 어떤 방식이든 dsio는 각각의 데이터 스트림에 적절한 대시보드를 만들어줍니다.
+또한 주피터 노트북에서 dsio를 작동시키면 Bokeh 대시보드에 데이터가 스트리밍 되는 것을 주피터 노트북 안에서 볼 수 있습니다.
 
 You can use dsio through the command line or import it in your Python code. You can visualize your data streams using the built-in Bokeh server or you can restream them to Elasticsearch and visualize them with Kibana. In either case, dsio will generate an appropriate dashboard for your stream. Also, if you invoke dsio through a Jupyter notebook, it will embed the streaming Bokeh dashboard within the same notebook.
 
@@ -18,15 +25,20 @@ You can use dsio through the command line or import it in your Python code. You 
 
 ### Examples
 
+이 섹션에서는 먼저 'examples' 폴더안에서 커맨드를 실행하세요. 만약 이전에 언급했던 방식으로(pip 사용 설치 방식) 설치하셨다면 다음 커맨드를 실행하면 example 폴더 위치로 바로 갈 수 있습니다.
+
 For this section, it is best to run commands from inside the `examples` directory. If you have installed dsio via pip as demonstrated above, you'd need to run the following command:
 
     cd dsio-env/src/dsio/examples
 
-If instead you cloned the github repo then just `cd dsio/examples` will do.
+가지고 있는 dataset이나 example용 csv dataset을 사용할 수 있습니다. 만약 데이터 셋이 시간축을 가지면 dsio는 자동으로 그 축을 찾으려고 합니다.
+다른 방법으로는 `--timefiels` 파라미터를 통해 직접 사용자가 시간축을 지정해 줄 수 있습니다. 만약 시간축이 존재하지 않으면 dsio는 자동적으로 시계열데이터가 현재부터 1초간격으로 구성된것으로 파악합니다.
 
 You can use the example csv datasets or provide your own. If the dataset includes a time dimension, dsio will attempt to detect it automatically. Alternatively, you can use the `--timefield` argument to manually configure the field that designates the time dimension. If no such field exists, dsio will assume the data is a time series starting from now with 1sec intervals between samples.
 
     dsio data/cardata_sample.csv
+
+위 커맨드는 cardata라는 
 
 The above command will load the cardata sample csv and will use the default Gaussian1D anomaly detector to apply scores on every numeric column. Then it will generate an appropriate Bokeh dashboard and restream the data. A browser window should open that will point to the generated dashboard.
 
