@@ -1,5 +1,6 @@
 # datastream.io
 An open-source framework for real-time anomaly detection using Python, Elasticsearch and Kibana.
+파이썬, Elasticsearch, Kibina를 활용한 실시간 alnomaly detiction을 위한 오픈소스 기반 프레임워크
 
 ## Installation
 The recommended installation method is to use pip within a Python 3.x virtalenv.
